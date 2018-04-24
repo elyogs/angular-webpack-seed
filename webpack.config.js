@@ -101,11 +101,11 @@ module.exports = function makeWebpackConfig() {
     
     const markup = {
         test: /\.html$/,
+        /* exclude: /src\\index\.html/, */
         use: [
             { loader: 'ngtemplate-loader' },
             { loader: 'html-loader' }
-        ],
-        exclude: /src\\index\.html/
+        ]
     }
 
     const fonts = {
@@ -161,7 +161,7 @@ module.exports = function makeWebpackConfig() {
         // Render index.html
         config.plugins.push(
             new HtmlWebpackPlugin({
-                template: './src/index.html',
+                template: './src/index.ejs',
                 inject: 'head'
             })
         // Reference: https://github.com/webpack/extract-text-webpack-plugin
