@@ -1,9 +1,7 @@
 'use strict';
 
 // Modules
-/* var webpack = require('webpack'); */
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 /**
@@ -101,7 +99,6 @@ module.exports = function makeWebpackConfig() {
     
     const markup = {
         test: /\.html$/,
-        /* exclude: /src\\index\.html/, */
         use: [
             { loader: 'ngtemplate-loader' },
             { loader: 'html-loader' }
@@ -142,14 +139,6 @@ module.exports = function makeWebpackConfig() {
    * List: http://webpack.github.io/docs/list-of-plugins.html
    */
     config.plugins = [
-        /*new webpack.LoaderOptionsPlugin({
-            test: /\.scss$/i,
-            options: {
-                postcss: {
-                    plugins: [autoprefixer]
-                }
-            }
-        })*/
         new CopyWebpackPlugin([
             { from: './src/public/js/vendor/*', to: 'js/vendor/', flatten: true }
           ])
@@ -158,20 +147,13 @@ module.exports = function makeWebpackConfig() {
     // Skip rendering index.html in test mode
     if (!isTest) {
         // Reference: https://github.com/ampedandwired/html-webpack-plugin
-        // Render index.html
+        // Render index.ejs
         config.plugins.push(
             new HtmlWebpackPlugin({
                 template: './src/index.ejs',
                 inject: 'head'
             })
-        // Reference: https://github.com/webpack/extract-text-webpack-plugin
-        // Extract css files
-        // Disabled when in test mode or not in build mode
-        /* , new ExtractTextPlugin({
-            filename: 'css/[name].css',
-            disable: !isProd,
-            allChunks: true
-        }) */)
+        );
     }
 
     /**
